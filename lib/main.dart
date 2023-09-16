@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'weather_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       home: const WeatherPage(),
     );
@@ -34,7 +36,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
   Future<void> fetchWeather(String location) async {
     final apiKey = "fe9a7ae0c91c4ad386d221043231409";
-    final apiUrl = "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$location&aqi=no";
+    final apiUrl =
+        "http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$location&aqi=no";
 
     final response = await http.get(Uri.parse(apiUrl));
 
@@ -42,7 +45,6 @@ class _WeatherPageState extends State<WeatherPage> {
       final weatherJson = json.decode(response.body);
       final locationData = weatherJson['location'];
       final currentData = weatherJson['current'];
-
       final name = locationData['name'];
       final region = locationData['region'];
       final country = locationData['country'];
@@ -78,10 +80,13 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal.shade50,
       appBar: AppBar(
         title: const Text('Weather App'),
+
       ),
-      body: Padding(
+      body:
+      Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -102,7 +107,8 @@ class _WeatherPageState extends State<WeatherPage> {
               weatherData,
               style: const TextStyle(fontSize: 18),
             ),
-          ],
+            // Image.asset('images/weathericon.png'),
+        ],
         ),
       ),
     );
